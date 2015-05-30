@@ -49,12 +49,10 @@ $(OBJ_PATH)%.o:$(SRC_PATH)%.c
 
 clean:
 	@echo "${RED} Delete OBJ files ${NC}"
-	@make clean -s -C libft
 	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@echo "${RED} Delete $(NAME) file ${NC}"
-	@make fclean -s -C libft
 	@rm -rf $(NAME)
 leakcheck: re
 	LeakCheck ./$(NAME)

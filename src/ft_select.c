@@ -6,41 +6,34 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/26 22:37:39 by avallete          #+#    #+#             */
-/*   Updated: 2015/05/29 20:49:07 by avallete         ###   ########.fr       */
+/*   Updated: 2015/05/30 02:04:43 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void    ft_select(char **env, char **av, int ac)
+void    printcontent(t_dlst *elem)
 {
-    if (env && ac)
-    {
-        (void)env;
-        (void)ac;
-    }
-    t_dlst *test;
-    if (*av)
-        test = ft_dlstnew(ft_strdup(*av), ft_strlen(*av));
-    av++;
-    while (*av)
-    {
-        ft_dlstpushback(&test, ft_dlstnew(ft_strdup(*av), ft_strlen(*av)));
-        av++;
-    }
-    ft_circlelist(&test);
-    ft_printf("%s\n", (char*)test->content);
-    ft_dlstdelone(&(test->next->next));
-    while (test)
-    {
-        ft_printf("%s\n", (char*)test->content);
-        test = test->next;
-    }
+    ft_putstr((char*)elem->content);
+    ft_putchar('\n');
 }
 
-int     main(int argc, char **argv, char **env)
+void    ft_select(char **av, int ac)
 {
-    if (argc >= 2)
-        ft_select(env, argv, argc);
+    t_select *select;
+
+    select = NULL;
+    select = structinit(av, ac);
+    if (select)
+        ft_dlstiter(select->args, &printcontent);
+}
+
+int     main(int argc, char **argv)
+{
+    if (getenv("TERM") != NULL)
+    {
+        if (argc >= 2)
+            ft_select(++argv, argc);
+    }
     return (0);
 }
