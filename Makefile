@@ -6,13 +6,15 @@
 #    By: avallete <avallete@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/18 13:18:20 by avallete          #+#    #+#              #
-#    Updated: 2015/05/30 01:17:44 by avallete         ###   ########.fr        #
+#    Updated: 2015/05/31 07:49:28 by avallete         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_PATH:=./src/
-SRC_NAME:= ft_select.c\
-			init.c
+SRC_NAME:=	ft_select.c\
+		init.c\
+		get_signal.c\
+		ft_putthat.c
 CFLAGS=-Wall -Wextra -Werror
 OBJ_PATH=./obj/
 OBJ_NAME=$(SRC_NAME:.c=.o)
