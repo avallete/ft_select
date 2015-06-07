@@ -1,0 +1,3 @@
+[submodule "libft_end"]
+	path = libft
+	url = https://github.com/avallete/libft_end.git
