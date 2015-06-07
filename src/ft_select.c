@@ -77,7 +77,7 @@ void    ft_select(char **av, int ac)
         if (select->buf[0] == 4)
             quit_prog(select);
         clear_term();
-        ft_dlstiter(select->args, printcontent);
+//        ft_dlstiter(select->args, printcontent);
     }
 }
 
