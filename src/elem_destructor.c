@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_signal.c                                       :+:      :+:    :+:   */
+/*   elem_destructor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/05/31 04:53:37 by avallete          #+#    #+#             */
-/*   Updated: 2015/05/31 05:04:06 by avallete         ###   ########.fr       */
+/*   Created: 2016/08/05 23:18:53 by avallete          #+#    #+#             */
+/*   Updated: 2016/08/05 23:21:07 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void sigquit(int sig)
+void				elem_destructor(void *elem)
 {
-    t_select *ret;
+	t_elem *tmp;
 
-    if ((ret = (t_select*)malloc(sizeof(t_select))))
-    {
-        tcgetattr(0, &ret->termold);
-        ret->termold.c_lflag = (ICANON | ECHO);
-        tcsetattr(0, TCSANOW, &(ret->termold));
-        if (sig == SIGINT)
-        ft_putstr("Signal sigint catch\n");
-        exit(100);
-    }
+	tmp = (t_elem*)elem;
+	if (tmp->name)
+		free(tmp->name);
+	tmp->name = NULL;
+	free(elem);
 }

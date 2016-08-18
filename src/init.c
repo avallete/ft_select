@@ -5,65 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/05/30 00:52:17 by avallete          #+#    #+#             */
-/*   Updated: 2015/06/02 18:42:03 by avallete         ###   ########.fr       */
+/*   Created: 2016/08/05 23:13:48 by avallete          #+#    #+#             */
+/*   Updated: 2016/08/06 03:59:27 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static t_elem   *new_elem(char *name, char mode, int len)
+static t_elem			*ft_new_elem(char *ename, char emode, int elen)
 {
-    t_elem      *ret;
+	t_elem	*ret;
 
-    if ((ret = (t_elem*)malloc(sizeof(t_elem))))
-    {
-        ret->name = ft_strdup(name);
-        ret->mode = mode;
-        ret->len = len;
-    }
-    return (ret);
+	if ((ret = (t_elem*)malloc(sizeof(t_elem))))
+	{
+		ret->name = ft_strdup(ename);
+		ret->mode = emode;
+		ret->len = (size_t)elen;
+		ret->color = NULL;
+	}
+	return (ret);
 }
 
-static void     take_arguments(char **av, t_dlst **dest)
+static int				ft_save_arguments(char **argv, t_dlst **dest)
 {
-    if (av && *av)
-    {
-        *dest = ft_dlstnew(new_elem(*av, 0, ft_strlen(*av)), sizeof(t_elem*));
-        av++;
-        while (*av)
-        {
-            ft_dlstpushback(dest, ft_dlstnew(new_elem(*av, 0, ft_strlen(*av)),\
-                sizeof(t_elem*)));
-            av++;
-        }
-    }
+	int		i;
+	t_elem	*first_elem;
+
+	i = 0;
+	if (argv && *argv)
+	{
+		first_elem = ft_new_elem(*argv, 0, ft_strlen(*argv));
+		first_elem->mode = IS_HOVERED;
+		*dest = ft_dlstnew(first_elem, sizeof(t_elem*));
+		argv++;
+		++i;
+		while (*argv)
+		{
+			if (**argv)
+			{
+				ft_dlstpushback(dest, ft_dlstnew(ft_new_elem(*argv, 0,\
+								ft_strlen(*argv)), sizeof(t_elem*)));
+				++i;
+			}
+			argv++;
+		}
+	}
+	return (i);
 }
 
-void            clear_term()
+static void				select_fatal_error(t_select *env, char *msg)
 {
-    tputs(tgetstr("cl", NULL), 1, ft_putthat);
+	if (msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	env->quit = 1;
 }
 
-t_select        *structinit(char **av, int ac)
+void					ft_init_term(void *data)
 {
-    t_select *ret;
+	t_select *env;
 
-    if ((ret = (t_select*)malloc(sizeof(t_select))))
-    {
-        ret->argsize = ac;
-        ret->nameterm = getenv("TERM");
-        take_arguments(av, &ret->args);
-         if (tgetent(NULL, ret->nameterm) < 1)
-            ft_putstr("tgetent failed !\n"), exit(-1);
-        if (tcgetattr(0, &ret->termold) == -1 || tcgetattr(0, &ret->term) == -1)
-            ft_putstr("tcgetattr failed !\n"), exit(-1);
-        ret->term.c_lflag &= ~(ICANON | ECHO);
-        if (tcsetattr(0, TCSADRAIN, &(ret->term)) == -1)
-            ft_putstr("Changing terminal mode failed !\n"), exit(-1);
-        ret->quit = 0;
-        ret->buf[3] = 0;
-        clear_term();
-    }
-    return (ret);
+	env = (t_select*)data;
+	env->print = 1;
+	if (tgetent(NULL, env->nameterm) < 1)
+		select_fatal_error(env, "tgetent failed !");
+	if (tcgetattr(STDIN_FILENO, &env->termold) == -1\
+		|| tcgetattr(STDIN_FILENO, &env->term) == -1)
+		select_fatal_error(env, "tcgetattr failed !");
+	env->term.c_iflag |= IGNBRK;
+	env->term.c_lflag |= ISIG;
+	env->term.c_lflag &= ~(ICANON | ECHO | ECHOK | ECHOE | ECHONL | IEXTEN);
+	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(env->term)) == -1)
+		select_fatal_error(env, "Changing terminal mode failed !");
+	ft_usetermcap("ti", isatty(STDOUT_FILENO));
+	ft_usetermcap("vi", isatty(STDOUT_FILENO));
+	signal(SIGTSTP, &ft_sighandler);
+	ft_update_term_infos(env);
+}
+
+void					ft_new_select(t_select *env, char **argv)
+{
+	env->wait = 0;
+	env->nameterm = getenv("TERM");
+	env->page.arguments = ft_save_arguments(argv, &env->args);
+	env->page.current_element = env->args;
+	env->page.start_page_element = env->args;
+	init_cursor_position(env);
+	env->quit = 0;
+	ft_bzero(env->buf, 5);
+	ft_init_term(env);
 }

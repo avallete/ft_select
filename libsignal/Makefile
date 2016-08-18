@@ -32,10 +32,6 @@ CYAN=\033[0;36m
 ORANGE=\033[0;33m
 NC=\033[0m
 
-debug: CFLAGS=-g3 -O0
-
-debug: all
-
 
 all: $(NAME)
 
@@ -58,6 +54,9 @@ clean:
 fclean: clean
 	@echo "${RED}Delete $(NAME) file${NC}"
 	@rm -rf $(NAME)
+
+debug: CFLAGS=-g3 -O0
+debug: all
 
 re: fclean all clean
 

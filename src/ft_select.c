@@ -5,89 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/05/26 22:37:39 by avallete          #+#    #+#             */
-/*   Updated: 2015/06/03 17:05:12 by avallete         ###   ########.fr       */
+/*   Created: 2016/08/05 23:26:06 by avallete          #+#    #+#             */
+/*   Updated: 2016/08/06 03:57:26 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int sig;
-
-void    printcontent(t_dlst *elem)
+static void	check_empty_arguments(int *argc, char ***argv)
 {
-    ft_putstr(((t_elem*)elem->content)->name);
-    ft_putchar('\n');
+	while (**argv && !***argv)
+	{
+		*argv += 1;
+		*argc -= 1;
+	}
 }
 
-void    get_size(t_select *select)
+static void	ft_init_sig(t_signal *sig_struct, t_select *env)
 {
-    ioctl(0, TIOCGWINSZ, &(select->win));
-    ft_printf("size = %d:%d\n", select->win.ws_row, select->win.ws_col);
+	sig_struct->data = env;
+	ft_sig_handler_init(sig_struct->sig_handler);
+	sig_struct->sig_handler[SIGINT] = &ft_quit;
+	sig_struct->sig_handler[SIGWINCH] = &ft_update_term_infos;
+	sig_struct->sig_handler[SIGTSTP] = &sigtstp_handle;
+	sig_struct->sig_handler[SIGCONT] = &ft_init_term;
+	ft_signal_watch(sig_struct);
 }
 
-void    get_touch(t_select *select)
+static void	ft_select(char **argv)
 {
-    get_size(select);
-    read(0, select->buf, 3);
-    ft_putnbr((int)select->buf[0]);
-    ft_putchar('\n');
-    ft_putnbr((int)select->buf[1]);
-    ft_putchar('\n');
-    ft_putnbr((int)select->buf[2]);
-    ft_putchar('\n');
+	t_signal	sig_struct;
+	t_select	env;
+
+	env.debug = 0;
+	ft_new_select(&env, argv);
+	ft_init_sig(&sig_struct, &env);
+	assign_colors(env.args);
+	env.page.relpos = get_current_element_relative_position(\
+														&(env.page), env.win);
+	while (!env.quit)
+	{
+		if (env.print)
+		{
+			change_selected_element(&env);
+			ft_print_all_page(&env);
+			get_input(&env);
+		}
+	}
+	ft_quit(&env);
 }
 
-static void    quit_prog(t_select *select)
+int			main(int argc, char **argv)
 {
-    tcsetattr(0, TCSANOW, &(select->termold));
-    select->quit = 1;
-}
-
-void    sig_handler(int signal)
-{
-    sig = signal;
-}
-
-void    sig_action(t_select *select)
-{
-    if (sig)
-    {
-        ft_printf("Signal is : %d\n", sig);
-        if (sig == SIGWINCH)
-        {
-            get_size(select);
-        }
-        sig = 0;
-    }
-}
-
-void    ft_select(char **av, int ac)
-{
-    t_select *select;
-
-    select = NULL;
-    select = structinit(av, ac);
-    signal(SIGINT, &sigquit);
-    signal(SIGWINCH, &sig_handler);
-    while (!select->quit)
-    {
-        sig_action(select);
-        get_touch(select);
-        if (select->buf[0] == 4)
-            quit_prog(select);
-        clear_term();
-//        ft_dlstiter(select->args, printcontent);
-    }
-}
-
-int     main(int argc, char **argv)
-{
-    sig = 0;
-    if (getenv("TERM") != NULL)
-    {
-        if (argc >= 2)
-            ft_select(++argv, argc);
-    }
-    return (0);
+	if (getenv("TERM") != NULL)
+	{
+		if (argc > 1)
+		{
+			--argc;
+			++argv;
+			check_empty_arguments(&argc, &argv);
+			if (argc)
+				ft_select(argv);
+		}
+	}
+	return (0);
 }
