@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/03 19:51:49 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 04:02:56 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/19 16:57:00 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct				s_select
 	char					buf[5];
 	char					debug;
 	char					print;
+	char					restore_term;
 }							t_select;
 
 void						elem_destructor(void *elem);

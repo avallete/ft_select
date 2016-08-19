@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 20:12:17 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 04:00:36 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/19 16:53:25 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ static void				ft_close_terminal(void *data)
 	ft_clean_screen((t_select*)data);
 	ft_usetermcap("te", isatty(STDOUT_FILENO));
 	ft_usetermcap("ve", isatty(STDOUT_FILENO));
-	tcsetattr(1, TCSANOW, &(((t_select*)data)->termold));
+	while (tcsetattr(STDOUT_FILENO, TCSANOW,\
+				&(((t_select*)data)->termold)) == -1)
+	{
+	}
 	((t_select*)data)->print = 0;
 }
 
 void					sigtstp_handle(void *data)
 {
-	ft_close_terminal(data);
+	if (((t_select*)data)->restore_term)
+		ft_close_terminal(data);
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(isatty(STDOUT_FILENO), TIOCSTI, KEY_CTRL_Z);
 }
@@ -31,7 +35,8 @@ void					sigtstp_handle(void *data)
 void					ft_quit(void *term)
 {
 	delete_all(((t_select*)term)->args);
-	ft_close_terminal(term);
+	if (((t_select*)term)->restore_term)
+		ft_close_terminal(term);
 	exit(0);
 }
 

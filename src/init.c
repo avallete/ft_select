@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:13:48 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:59:27 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/19 16:51:46 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void				select_fatal_error(t_select *env, char *msg)
 	if (msg)
 		ft_putendl_fd(msg, STDERR_FILENO);
 	env->quit = 1;
+	ft_quit(env);
 }
 
 void					ft_init_term(void *data)
@@ -66,16 +67,21 @@ void					ft_init_term(void *data)
 
 	env = (t_select*)data;
 	env->print = 1;
+	env->restore_term = 0;
+	if (!isatty(STDIN_FILENO))
+		select_fatal_error(env, "STDIN_FILENO does not exit !");
 	if (tgetent(NULL, env->nameterm) < 1)
 		select_fatal_error(env, "tgetent failed !");
 	if (tcgetattr(STDIN_FILENO, &env->termold) == -1\
 		|| tcgetattr(STDIN_FILENO, &env->term) == -1)
 		select_fatal_error(env, "tcgetattr failed !");
+	env->restore_term = 1;
 	env->term.c_iflag |= IGNBRK;
 	env->term.c_lflag |= ISIG;
 	env->term.c_lflag &= ~(ICANON | ECHO | ECHOK | ECHOE | ECHONL | IEXTEN);
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(env->term)) == -1)
-		select_fatal_error(env, "Changing terminal mode failed !");
+	while (tcsetattr(STDIN_FILENO, TCSADRAIN, &(env->term)) == -1)
+	{
+	}
 	ft_usetermcap("ti", isatty(STDOUT_FILENO));
 	ft_usetermcap("vi", isatty(STDOUT_FILENO));
 	signal(SIGTSTP, &ft_sighandler);
@@ -85,6 +91,7 @@ void					ft_init_term(void *data)
 void					ft_new_select(t_select *env, char **argv)
 {
 	env->wait = 0;
+	env->restore_term = 0;
 	env->nameterm = getenv("TERM");
 	env->page.arguments = ft_save_arguments(argv, &env->args);
 	env->page.current_element = env->args;

@@ -16,10 +16,12 @@ static void	ft_print_elems_in_columns(t_select *env)
 {
 	t_dlst			*tmp;
 	unsigned int	i;
+	size_t			column_len;
 	size_t			e;
 
 	i = 0;
 	tmp = env->page.start_page_element;
+	column_len = env->page.columns_infos.column_len;
 	while (tmp && i < env->page.elems_per_page)
 	{
 		e = 0;
