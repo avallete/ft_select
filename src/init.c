@@ -6,11 +6,12 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:13:48 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/19 16:51:46 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 20:50:08 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+#include <stdio.h>
 
 static t_elem			*ft_new_elem(char *ename, char emode, int elen)
 {
@@ -67,9 +68,8 @@ void					ft_init_term(void *data)
 
 	env = (t_select*)data;
 	env->print = 1;
-	env->restore_term = 0;
 	if (!isatty(STDIN_FILENO))
-		select_fatal_error(env, "STDIN_FILENO does not exit !");
+		select_fatal_error(env, "STDIN_FILENO does not valid terminal !");
 	if (tgetent(NULL, env->nameterm) < 1)
 		select_fatal_error(env, "tgetent failed !");
 	if (tcgetattr(STDIN_FILENO, &env->termold) == -1\
@@ -82,8 +82,8 @@ void					ft_init_term(void *data)
 	while (tcsetattr(STDIN_FILENO, TCSADRAIN, &(env->term)) == -1)
 	{
 	}
-	ft_usetermcap("ti", isatty(STDOUT_FILENO));
-	ft_usetermcap("vi", isatty(STDOUT_FILENO));
+	ft_usetermcap("ti", STDIN_FILENO);
+	ft_usetermcap("vi", STDIN_FILENO);
 	signal(SIGTSTP, &ft_sighandler);
 	ft_update_term_infos(env);
 }

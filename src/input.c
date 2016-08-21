@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/06 02:36:21 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 04:00:32 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:09:21 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,5 @@ void			get_input(t_select *env)
 		get_next_element(env);
 	}
 	if (!ft_strcmp(KEY_ENTER, env->buf))
-	{
-		print_selected_elements(env->args);
-		env->quit = 1;
-	}
+		ft_terminate(env);
 }

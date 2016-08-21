@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/06 03:46:31 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:48:27 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 20:02:35 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	change_selected_element(t_select *env)
 	((t_elem*)env->page.current_element->content)->mode ^= IS_HOVERED;
 	ft_print_current_elem(env);
 	env->page.pos.z = elem_index;
-	if (env->debug || old->len > env->win.ws_col ||\
+	if (old->len > env->win.ws_col ||\
 		((t_elem*)env->page.current_element->content)->len > env->win.ws_col)
 		reprint_all_window(env);
 }
@@ -67,5 +67,4 @@ void	print_selected_elements(t_dlst *args)
 		}
 		args = args->next;
 	}
-	ft_putstr("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 20:12:17 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/19 16:53:25 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 20:59:39 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,44 @@
 static void				ft_close_terminal(void *data)
 {
 	ft_clean_screen((t_select*)data);
-	ft_usetermcap("te", isatty(STDOUT_FILENO));
-	ft_usetermcap("ve", isatty(STDOUT_FILENO));
-	while (tcsetattr(STDOUT_FILENO, TCSANOW,\
-				&(((t_select*)data)->termold)) == -1)
+	ft_usetermcap("te", STDIN_FILENO);
+	ft_usetermcap("ve", STDIN_FILENO);
+	if (((t_select*)data)->restore_term)
 	{
+		while (tcsetattr(STDIN_FILENO, TCSANOW, \
+						&(((t_select*)data)->termold)) == -1)
+		{
+		}
 	}
 	((t_select*)data)->print = 0;
 }
+
+/*
+** Must send ctrl+z char to bypass read blocking. (ioctl) 
+*/
 
 void					sigtstp_handle(void *data)
 {
 	if (((t_select*)data)->restore_term)
 		ft_close_terminal(data);
 	signal(SIGTSTP, SIG_DFL);
-	ioctl(isatty(STDOUT_FILENO), TIOCSTI, KEY_CTRL_Z);
+	ioctl(STDIN_FILENO, TIOCSTI, KEY_CTRL_Z);
 }
 
 void					ft_quit(void *term)
 {
-	delete_all(((t_select*)term)->args);
 	if (((t_select*)term)->restore_term)
 		ft_close_terminal(term);
+	delete_all(((t_select*)term)->args);
+	exit(0);
+}
+
+void					ft_terminate(void *term)
+{
+	if (((t_select*)term)->restore_term)
+		ft_close_terminal(term);
+	print_selected_elements(((t_select*)term)->args);
+	delete_all(((t_select*)term)->args);
 	exit(0);
 }
 

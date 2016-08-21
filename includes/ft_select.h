@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/03 19:51:49 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/19 16:57:00 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 20:05:23 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct				s_select
 	char					quit;
 	char					wait;
 	char					buf[5];
-	char					debug;
 	char					print;
 	char					restore_term;
 }							t_select;
@@ -117,6 +116,7 @@ void						ft_usetermcap(char *capacity, int fd);
 
 void						sigtstp_handle(void *data);
 void						ft_quit(void *term);
+void						ft_terminate(void *term);
 void						ft_update_term_infos(void *env);
 
 /*

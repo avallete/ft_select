@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 19:44:28 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/05 23:10:35 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 17:12:58 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void				ft_smarttrim(char *str, size_t max_len)
 
 	len = ft_strlen(str);
 	if (len < max_len)
-		ft_bufferize(isatty(STDOUT_FILENO), str, 0);
+		ft_bufferize(STDIN_FILENO, str, 0);
 	else
 	{
 		ft_strncpy(ret, str, max_len - 3);
@@ -69,15 +69,14 @@ void				ft_smarttrim(char *str, size_t max_len)
 		ret[max_len - 3] = '.';
 		ret[max_len] = '\0';
 	}
-	ft_bufferize(isatty(STDOUT_FILENO), ret, 0);
+	ft_bufferize(STDIN_FILENO, ret, 0);
 }
 
 void				ft_clean_screen(t_select *env)
 {
-	ft_usetermcap("ho", isatty(STDOUT_FILENO));
-	ft_putstr_fd(tgoto(tgetstr("DL", NULL), 0, env->win.ws_row),\
-				isatty(STDOUT_FILENO));
-	ft_usetermcap("ho", isatty(STDOUT_FILENO));
+	ft_usetermcap("ho", STDIN_FILENO);
+	ft_putstr_fd(tgoto(tgetstr("DL", NULL), 0, env->win.ws_row), STDIN_FILENO);
+	ft_usetermcap("ho", STDIN_FILENO);
 }
 
 void				ft_get_win_size(t_select *env)

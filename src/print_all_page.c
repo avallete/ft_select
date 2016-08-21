@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/06 03:51:16 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:55:14 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/21 17:14:52 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ static void	ft_print_elems_in_columns(t_select *env)
 {
 	t_dlst			*tmp;
 	unsigned int	i;
-	size_t			column_len;
 	size_t			e;
 
 	i = 0;
 	tmp = env->page.start_page_element;
-	column_len = env->page.columns_infos.column_len;
 	while (tmp && i < env->page.elems_per_page)
 	{
 		e = 0;
@@ -33,7 +31,7 @@ static void	ft_print_elems_in_columns(t_select *env)
 			++i;
 		}
 		if (i != env->page.elems_per_page && tmp)
-			ft_bufferize(isatty(STDOUT_FILENO), "\n", 0);
+			ft_bufferize(STDIN_FILENO, "\n", 0);
 	}
 }
 
@@ -42,7 +40,7 @@ void		reprint_all_window(t_select *env)
 	ft_clean_screen(env);
 	ft_use_pagination(env, &(env->page));
 	ft_print_elems_in_columns(env);
-	ft_bufferize(isatty(STDOUT_FILENO), "", 1);
+	ft_bufferize(STDIN_FILENO, "", 1);
 }
 
 void		ft_print_all_page(t_select *env)
@@ -51,5 +49,5 @@ void		ft_print_all_page(t_select *env)
 		ft_window_too_small(env);
 	if (ft_use_pagination(env, &(env->page)))
 		reprint_all_window(env);
-	ft_bufferize(isatty(STDOUT_FILENO), "", 1);
+	ft_bufferize(STDIN_FILENO, "", 1);
 }
