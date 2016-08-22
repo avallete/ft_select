@@ -46,6 +46,6 @@ Commands:
 	"Enter": Return list of selected elements to the shell with space separation.
 
 ## Demo
-![Imgur](http://i.imgur.com/Lzlsf9W.gifv "Demo gif")
+![tty](https://cloud.githubusercontent.com/assets/8771783/17856665/dff718be-687e-11e6-90fd-993fa6bbcf67.gif)
 
 <sub><sup>(Gif created with https://github.com/icholy/ttygif)</sub></sup>
