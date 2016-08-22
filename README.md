@@ -47,3 +47,4 @@ Commands:
 
 ## Demo
 ![gif](http://i.imgur.com/Lzlsf9W.gif)
+(Made with https://github.com/icholy/ttygif)
