@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 20:12:17 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/21 20:59:39 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/22 19:29:46 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void				ft_close_terminal(void *data)
 }
 
 /*
-** Must send ctrl+z char to bypass read blocking. (ioctl) 
+** Must send ctrl+z char to bypass read blocking. (ioctl)
 */
 
 void					sigtstp_handle(void *data)
