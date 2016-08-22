@@ -46,4 +46,4 @@ Commands:
 	"Enter": Return list of selected elements to the shell with space separation.
 
 ## Demo
-![gif](http://i.imgur.com/a/1kNxe)
+![gif](http://i.imgur.com/H4dSoaY.gif)
