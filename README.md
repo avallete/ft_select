@@ -32,12 +32,18 @@ You can also need to run ```sudo apt-get install libncurses-dev libc-dev gcc```
 
 ## Usage
 Commands:
+
     "D": Delete all selected elements from the list.
+
 	"Delete/Backspace": Delete the current element.
+
 	"Escape": Quit the programm without returning any element.
+
 	"Espace": Toggle selection on the current element and go to the next argument.
+
 	"Arrows(Up/Left/Right/Down)": Move between elements/pages.
+
 	"Enter": Return list of selected elements to the shell with space separation.
 
 ## Demo
-![gif](http://imgur.com/a/1kNxe)
+![gif](http://i.imgur.com/a/1kNxe)
