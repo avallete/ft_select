@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:26:06 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/21 21:13:24 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/30 19:15:31 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,9 @@ int			main(int argc, char **argv)
 				ft_select(argv);
 		}
 		else
-		{
-			ft_putendl("Env is empty.");
 			exit(1);
-		}
 	}
+	else
+		ft_puterrdl("Error: No TERM in env.");
 	return (0);
 }
