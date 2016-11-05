@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:26:06 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/30 19:17:01 by avallete         ###   ########.fr       */
+/*   Updated: 2016/08/30 19:15:31 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int			main(int argc, char **argv)
 			exit(1);
 	}
 	else
-		ft_puterrdl("Error: Cannot found the TERM var in env.");
+		ft_puterrdl("Error: No TERM in env.");
 	return (0);
 }
