@@ -50,6 +50,9 @@ void				ft_get_columns_infos(t_dlst *args, t_page *page,\
 		if (page->elems_per_page > page->arguments)
 			page->elems_per_page = page->arguments;
 		page->max_row = (page->arguments / page->columns_infos.column_nb);
+		page->page_offset = (page->pos.z / page->elems_per_page);
+		page->range_min = (page->elems_per_page * page->page_offset);
+		page->range_max = page->range_min + page->range_max;
 	}
 }
 

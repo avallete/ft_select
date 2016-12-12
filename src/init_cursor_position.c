@@ -17,5 +17,4 @@ void	init_cursor_position(t_select *env)
 	env->page.pos.x = 0;
 	env->page.pos.y = 0;
 	env->page.pos.z = 0;
-	env->page.page_offset = 1;
 }

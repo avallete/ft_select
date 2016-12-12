@@ -65,8 +65,6 @@ void					ft_update_term_infos(void *env)
 	if (data->win.ws_col > 5 && data->win.ws_row > 5)
 	{
 		ft_get_columns_infos(data->args, &(data->page), data->win);
-		data->page.range_min = data->page.elems_per_page *\
-								data->page.page_offset;
 		data->page.range_max = data->page.range_min + data->page.elems_per_page;
 		data->page.pos = get_element_position_from_index(
 							data->page.pos.z, &(data->page));
