@@ -12,12 +12,6 @@
 
 #include "ft_select.h"
 
-static int		ft_put(int c)
-{
-	write(isatty(STDOUT_FILENO), &c, 1);
-	return (0);
-}
-
 void			ft_usetermcap(char *capacity, int fd)
 {
 	char *res;
