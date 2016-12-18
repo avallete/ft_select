@@ -6,7 +6,7 @@
 /*   By: avallete <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/05 12:14:35 by avallete          #+#    #+#             */
-/*   Updated: 2015/03/23 18:07:48 by avallete         ###   ########.fr       */
+/*   Updated: 2016/09/22 18:36:14 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ char			*ft_strtrim(char const *s)
 {
 	char	*result;
 	int		b;
-	int		e;
+	int		len;
 	int		mode;
 
 	if (s == NULL)
 		return (NULL);
-	e = ft_strlen(s);
+	len = ft_strlen(s);
 	mode = -1;
 	b = 0;
-	if ((result = (char*)malloc((sizeof(*result)) * e + 1)))
+	if ((result = (char*)malloc((sizeof(char)) * (len + 1))))
 	{
-		while ((s[b] == ' ' || s[b] == '\t' || s[b] == '\n') && s[b] != '\0')
+		while (ft_isspace(s[b]) && s[b] != '\0')
 			b++;
-		while (s[e] == ' ' || s[e] == '\t' || s[e] == '\n' || s[e] == '\0')
-			e--;
-		while (b <= e)
+		while (ft_isspace(s[len]) || s[len] == '\0')
+			len--;
+		while (b <= len)
 		{
 			result[++mode] = s[b];
 			b++;

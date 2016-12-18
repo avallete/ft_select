@@ -6,7 +6,7 @@
 /*   By: avallete <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 14:41:35 by avallete          #+#    #+#             */
-/*   Updated: 2016/06/21 17:48:58 by avallete         ###   ########.fr       */
+/*   Updated: 2016/09/17 19:00:43 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ char	*ft_strchr(const char *s, int c)
 	char	*dest;
 
 	dest = (char*)s;
-	while (*dest != c)
+	if (s)
 	{
-		if (*dest == '\0')
-			return (NULL);
-		dest++;
+		while (*dest != c)
+		{
+			if (*dest == '\0')
+				return (NULL);
+			++dest;
+		}
 	}
 	return (dest);
 }

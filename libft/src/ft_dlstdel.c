@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_too_small.c                                 :+:      :+:    :+:   */
+/*   ft_dlstdel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/06 03:55:46 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:56:29 by avallete         ###   ########.fr       */
+/*   Created: 2016/09/06 21:30:08 by avallete          #+#    #+#             */
+/*   Updated: 2016/09/17 21:44:54 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-void	ft_window_too_small(t_select *env)
+void				ft_dlstdel(t_dlst **lst, void (*destructor)(void *))
 {
-	ft_clean_screen(env);
-	ft_putendl("error window too small");
+	if (lst && *lst)
+	{
+		while ((*lst)->back)
+			lst = &((*lst)->back);
+		while ((*lst)->next)
+			ft_dlstdelone(&((*lst)->next), destructor);
+		ft_dlstdelone(lst, destructor);
+	}
 }

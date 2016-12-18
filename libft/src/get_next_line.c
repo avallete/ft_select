@@ -6,86 +6,63 @@
 /*   By: avallete <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/22 16:11:38 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/26 00:13:35 by avallete         ###   ########.fr       */
+/*   Updated: 2016/09/18 00:21:33 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static unsigned int	check_line(char *buf)
+static void			bufferize(char **dest, char *content)
 {
-	unsigned int i;
+	char *ret;
 
-	i = 0;
-	while (buf[i] != '\0')
+	ret = NULL;
+	ret = ft_strjoin(*dest, content);
+	ft_secfree(*dest);
+	*dest = ret;
+}
+
+static	char		*get_line(char **buf)
+{
+	char *truncbuf;
+	char *linepos;
+	char *ret;
+
+	truncbuf = NULL;
+	ret = NULL;
+	if (*buf)
 	{
-		if (buf[i] == '\n')
+		linepos = ft_strchr(*buf, '\n');
+		if (linepos)
 		{
-			buf[i] = '\0';
-			return (i + 1);
+			*linepos = '\0';
+			truncbuf = ft_strdup(linepos + 1);
 		}
-		i++;
-	}
-	return (i);
-}
-
-static void			join_buf(int n, char **buf2, char **buf)
-{
-	char	*tmp;
-	char	*tmp2;
-
-	(void)n;
-	tmp = NULL;
-	tmp2 = NULL;
-	(*buf2)[n] = '\0';
-	if (*buf2 && **buf2)
-	{
-		tmp2 = ft_strdup(*buf2);
-		if (*buf)
-			tmp = ft_strdup(*buf);
+		ret = ft_strdup(*buf);
 		ft_secfree(*buf);
-		*buf = ft_strjoin(tmp, tmp2);
-		ft_secfree(tmp);
-		ft_secfree(tmp2);
+		*buf = truncbuf;
 	}
-}
-
-static int			return_line(char **buf, char **buf2, char **line)
-{
-	unsigned int	i;
-	char			*tmp;
-
-	tmp = NULL;
-	i = check_line(*buf);
-	*line = ft_strdup(*buf);
-	tmp = ft_strdup(*buf + i);
-	free(*buf);
-	*buf = tmp;
-	ft_secfree(*buf2);
-	return (1);
+	return (ret);
 }
 
 int					get_next_line(int const fd, char **line)
 {
 	int				f;
-	char			*buf2;
+	char			tmpbuf[BUFF_SIZE + 1];
 	static char		*buf = NULL;
 
-	buf2 = NULL;
 	if (fd < 0 || (!(line)) || BUFF_SIZE < 1)
 		return (-1);
-	if ((!(buf2 = (char*)malloc(sizeof(char) * BUFF_SIZE + 1))))
-		return (-1);
-	while (((f = read(fd, buf2, BUFF_SIZE)) > 0) && (!(ft_strchr(buf2, '\n'))))
-		join_buf(f, &buf2, &buf);
-	if (buf2 && *buf2 && f > 0)
-		join_buf(f, &buf2, &buf);
+	tmpbuf[BUFF_SIZE] = '\0';
+	while ((!(ft_strchr(buf, '\n'))) && ((f = read(fd, tmpbuf, BUFF_SIZE)) > 0))
+	{
+		tmpbuf[f] = 0;
+		bufferize(&buf, (char*)(tmpbuf));
+	}
 	if (f < 0)
 		return (-1);
-	if (buf && buf[0] != '\0')
-		return (return_line(&buf, &buf2, line));
-	ft_secfree(buf2);
-	ft_secfree(buf);
-	*line = NULL;
+	*line = get_line(&buf);
+	if (buf)
+		return (1);
 	return (0);
 }

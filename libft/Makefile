@@ -6,7 +6,7 @@
 #    By: avallete <avallete@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/17 11:43:55 by avallete          #+#    #+#              #
-#*   Updated: 2016/08/25 16:10:27 by avallete         ###   ########.fr       *#
+#*   Updated: 2016/09/22 17:49:49 by avallete         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,10 @@ SRC_NAME=ft_atoi.c\
 			ft_isascii.c\
 			ft_isdigit.c\
 			ft_isprint.c\
+			ft_isspace.c\
 			ft_itoa.c\
 			ft_lstadd.c\
+			ft_lstfind.c\
 			ft_lstdel.c\
 			ft_lstdelone.c\
 			ft_lstiter.c\
@@ -42,6 +44,7 @@ SRC_NAME=ft_atoi.c\
 			ft_lstsize.c\
 			ft_dlstnew.c\
 			ft_dlstadd.c\
+			ft_dlstdel.c\
 			ft_dlstdelone.c\
 			ft_dlstiter.c\
 			ft_dlstpushback.c\
@@ -71,6 +74,7 @@ SRC_NAME=ft_atoi.c\
 			ft_putstr_fd.c\
 			ft_realloc.c\
 			ft_strcat.c\
+			ft_strepur.c\
 			ft_strchr.c\
 			ft_strclr.c\
 			ft_strcmp.c\
@@ -101,6 +105,7 @@ SRC_NAME=ft_atoi.c\
 			ft_strstr.c\
 			ft_strsub.c\
 			ft_strtrim.c\
+			ft_isnumber.c\
 			ft_tolower.c\
 			ft_toupper.c\
 			ft_treenew.c\
@@ -128,7 +133,7 @@ NC=\033[0m
 
 all: $(NAME)
 
-$(NAME):$(OBJ)
+$(NAME):$(OBJ) $(INCF)
 	@echo "${GREEN}Compile $(NAME) with $(CFLAGS)${NC}";
 	@echo "${LBLUE}ar rc $(NAME)${NC}"
 	@ar rc $(NAME) $(OBJ)

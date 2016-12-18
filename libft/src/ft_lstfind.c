@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_too_small.c                                 :+:      :+:    :+:   */
+/*   ft_lstfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/06 03:55:46 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:56:29 by avallete         ###   ########.fr       */
+/*   Created: 2016/09/06 19:44:27 by avallete          #+#    #+#             */
+/*   Updated: 2016/09/17 21:46:01 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-void	ft_window_too_small(t_select *env)
+/*
+** Return the node of the first element
+** who match a 0 result to the *f function who compare lst->content to dt.
+*/
+
+t_list				*ft_lstfind(t_list *lst, int (*f)(void*, void*), void *data)
 {
-	ft_clean_screen(env);
-	ft_putendl("error window too small");
+	while (lst)
+	{
+		if (!f(lst->content, data))
+			return (lst);
+		lst = lst->next;
+	}
+	return (NULL);
 }

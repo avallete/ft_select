@@ -28,13 +28,10 @@ t_vect				get_current_element_relative_position(t_page *page,\
 {
 	t_vect pos;
 
-	pos.x = 0;
-	pos.y = 0;
+	pos.y = page->pos.y;
 	pos.x = page->pos.x;
-	if (page->page_offset)
+	if (page->page_offset > 0)
 		pos.y = (page->pos.y) - (win.ws_row * page->page_offset);
-	else
-		pos.y = page->pos.y;
 	return (pos);
 }
 

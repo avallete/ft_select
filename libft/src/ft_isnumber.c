@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_too_small.c                                 :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/06 03:55:46 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:56:29 by avallete         ###   ########.fr       */
+/*   Created: 2016/09/22 17:43:57 by avallete          #+#    #+#             */
+/*   Updated: 2016/09/22 17:57:57 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-void	ft_window_too_small(t_select *env)
+int					ft_isnumber(const char *str)
 {
-	ft_clean_screen(env);
-	ft_putendl("error window too small");
+	int i;
+
+	i = 0;
+	if (str && *str)
+	{
+		if (str[i] == '-' || str[i] == '+')
+			++i;
+		while (str[i])
+		{
+			if (!(ft_isdigit(str[i])))
+				return (0);
+			++i;
+		}
+		return (1);
+	}
+	return (0);
 }

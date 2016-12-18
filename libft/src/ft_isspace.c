@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_too_small.c                                 :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/06 03:55:46 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 03:56:29 by avallete         ###   ########.fr       */
+/*   Created: 2016/09/22 18:02:42 by avallete          #+#    #+#             */
+/*   Updated: 2016/09/22 18:09:45 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-void	ft_window_too_small(t_select *env)
+int		ft_isspace(int c)
 {
-	ft_clean_screen(env);
-	ft_putendl("error window too small");
+	if (c == ' ' || c == '\n' || c == '\v' || c == '\t'\
+			|| c == '\r' || c == '\f')
+		return (1);
+	return (0);
 }
