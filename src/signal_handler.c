@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 20:12:17 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/22 19:29:46 by avallete         ###   ########.fr       */
+/*   Updated: 2016/12/19 11:38:09 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void					ft_update_term_infos(void *env)
 	ft_get_win_size(data);
 	if (data->win.ws_col > 5 && data->win.ws_row > 5)
 	{
+		data->wait = 0;
 		ft_get_columns_infos(data->args, &(data->page), data->win);
 		data->page.range_max = data->page.range_min + data->page.elems_per_page;
 		data->page.pos = get_element_position_from_index(
