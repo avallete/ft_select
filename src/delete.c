@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/06 02:46:35 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/06 02:51:46 by avallete         ###   ########.fr       */
+/*   Updated: 2016/12/30 15:08:13 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	delete_all(t_dlst *dlst)
 {
 	if (dlst && dlst->next)
 		delete_all(dlst->next);
-	ft_dlstdelone(&dlst, elem_destructor);
+	if (dlst)
+		ft_dlstdelone(&dlst, elem_destructor);
 }
