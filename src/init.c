@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:13:48 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/21 20:50:08 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/11 20:53:14 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int				ft_save_arguments(char **argv, t_dlst **dest)
 	return (i);
 }
 
-static void				select_fatal_error(t_select *env, char *msg)
+void					select_fatal_error(t_select *env, char *msg)
 {
 	if (msg)
 		ft_putendl_fd(msg, STDERR_FILENO);
@@ -73,7 +73,7 @@ void					ft_init_term(void *data)
 	if (tgetent(NULL, env->nameterm) < 1)
 		select_fatal_error(env, "tgetent failed !");
 	if (tcgetattr(STDIN_FILENO, &env->termold) == -1\
-		|| tcgetattr(STDIN_FILENO, &env->term) == -1)
+			|| tcgetattr(STDIN_FILENO, &env->term) == -1)
 		select_fatal_error(env, "tcgetattr failed !");
 	env->restore_term = 1;
 	env->term.c_iflag |= IGNBRK;
@@ -82,6 +82,7 @@ void					ft_init_term(void *data)
 	while (tcsetattr(STDIN_FILENO, TCSADRAIN, &(env->term)) == -1)
 	{
 	}
+	test_terminal_capabilities(env);
 	ft_usetermcap("ti", STDIN_FILENO);
 	ft_usetermcap("vi", STDIN_FILENO);
 	signal(SIGTSTP, &ft_sighandler);

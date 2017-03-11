@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/03 19:51:49 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/21 20:05:23 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/11 20:54:51 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void						ft_clean_screen(t_select *env);
 */
 void						ft_init_term(void *data);
 void						ft_new_select(t_select *env, char **argv);
+void						test_terminal_capabilities(t_select *env);
 
 /*
 ** Use termcaps
@@ -113,7 +114,7 @@ void						ft_usetermcap(char *capacity, int fd);
 /*
 ** Signal handling functions
 */
-
+void						select_fatal_error(t_select *env, char *msg);
 void						sigtstp_handle(void *data);
 void						ft_quit(void *term);
 void						ft_terminate(void *term);

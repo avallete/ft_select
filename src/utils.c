@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 19:44:28 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/21 17:12:58 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/11 20:52:04 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ void				ft_smarttrim(char *str, size_t max_len)
 void				ft_clean_screen(t_select *env)
 {
 	ft_usetermcap("ho", STDIN_FILENO);
-	ft_putstr_fd(tgoto(tgetstr("DL", NULL), 0, env->win.ws_row), STDIN_FILENO);
+	if (tgetstr("DL", NULL) && tgoto(tgetstr("DL", NULL), 0, env->win.ws_row))
+		ft_putstr_fd(tgoto(tgetstr("DL", NULL), 0, env->win.ws_row), \
+							STDIN_FILENO);
 	ft_usetermcap("ho", STDIN_FILENO);
 }
 

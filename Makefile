@@ -28,6 +28,7 @@ SRC_NAME:=	ft_select.c\
 		elem_destructor.c\
 		window_too_small.c\
 		init_cursor_position.c\
+		init_tests.c\
 		signal_handler.c
 
 INC_PATH=./includes/
