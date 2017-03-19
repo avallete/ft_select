@@ -44,6 +44,7 @@
 
 typedef struct				s_elem
 {
+	char 					*origname;
 	char					*name;
 	char					mode;
 	char					*color;

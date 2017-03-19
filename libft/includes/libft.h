@@ -76,6 +76,8 @@ int					ft_strstartby(const char *str, const char *niddle);
 void				ft_strfill(char *str, char c, size_t len);
 char				*ft_strepur(const char *source);
 int					ft_isnumber(const char *str);
+size_t				ft_strcount(char const *s, int (*f)(int c));
+char				*ft_strdupif(const char *s, int (*f)(int c));
 
 /*
 ** Write functions

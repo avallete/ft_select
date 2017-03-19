@@ -62,7 +62,7 @@ void	print_selected_elements(t_dlst *args)
 		{
 			if (i)
 				ft_putstr(" ");
-			ft_putstr(((t_elem*)args->content)->name);
+			ft_putstr(((t_elem*)args->content)->origname);
 			++i;
 		}
 		args = args->next;

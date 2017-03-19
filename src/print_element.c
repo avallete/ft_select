@@ -12,19 +12,6 @@
 
 #include "ft_select.h"
 
-static void	ft_fill_str(char *str, char fill, size_t len)
-{
-	size_t i;
-
-	i = 0;
-	while (i < len)
-	{
-		str[i] = fill;
-		++i;
-	}
-	str[i] = '\0';
-}
-
 static void	ft_print_elem(t_elem *elem, size_t max_len)
 {
 	if (elem->mode & IS_HOVERED)
@@ -48,14 +35,11 @@ static void	ft_print_elem(t_elem *elem, size_t max_len)
 
 static void	ft_print_padded(t_elem *elem, int lpad, int rpad, size_t max_len)
 {
-	char leftpad[lpad];
-	char rightpad[rpad];
-
-	ft_fill_str(leftpad, ' ', lpad);
-	ft_fill_str(rightpad, ' ', rpad);
-	ft_bufferize(STDIN_FILENO, leftpad, 0);
+	while (lpad-- > 0)
+		ft_bufferize(STDIN_FILENO, " ", 0);
 	ft_print_elem(elem, max_len);
-	ft_bufferize(STDIN_FILENO, rightpad, 0);
+	while (rpad-- > 0)
+		ft_bufferize(STDIN_FILENO, " ", 0);
 }
 
 void		print_element(t_select *env, t_elem *elem)

@@ -109,6 +109,8 @@ SRC_NAME=ft_atoi.c\
 			ft_tolower.c\
 			ft_toupper.c\
 			ft_treenew.c\
+			ft_strcount.c\
+			ft_strdupif.c\
 			get_next_line.c
 OBJ_PATH =./obj/
 OBJ_NAME=$(SRC_NAME:.c=.o)

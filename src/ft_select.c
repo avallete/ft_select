@@ -12,12 +12,16 @@
 
 #include "ft_select.h"
 
-static void	check_empty_arguments(int *argc, char ***argv)
+static void	check_empty_arguments(int *argc, char **argv)
 {
-	while (**argv && !***argv)
+	int i;
+
+	i = 0;
+	while (argv[i])
 	{
-		*argv += 1;
-		*argc -= 1;
+		if (ft_strcount(argv[i], ft_isprint) <= 0)
+			*argc -= 1;
+		++i;
 	}
 }
 
@@ -43,8 +47,7 @@ static void	ft_select(char **argv)
 	ft_new_select(&env, argv);
 	ft_init_sig(&sig_struct, &env);
 	assign_colors(env.args);
-	env.page.relpos = get_current_element_relative_position(\
-														&(env.page), env.win);
+	env.page.relpos = get_current_element_relative_position(&(env.page), env.win);
 	while (!env.quit)
 	{
 		if (env.print)
@@ -65,7 +68,7 @@ int			main(int argc, char **argv)
 		{
 			--argc;
 			++argv;
-			check_empty_arguments(&argc, &argv);
+			check_empty_arguments(&argc, argv);
 			if (argc)
 				ft_select(argv);
 		}

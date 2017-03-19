@@ -94,16 +94,19 @@ void			get_input(t_select *env)
 {
 	ft_bzero(env->buf, 5);
 	read(0, env->buf, 4);
-	key_up_down(env);
-	key_left_right(env);
-	parse_keys_delete(env);
 	if (!ft_strcmp(KEY_ESCAPE, env->buf))
 		ft_quit(env);
-	if (!ft_strcmp(KEY_SPACE, env->buf))
+	if (env->wait == 0)
 	{
-		((t_elem*)env->page.current_element->content)->mode ^= IS_SELECTED;
-		get_next_element(env);
+		key_up_down(env);
+		key_left_right(env);
+		parse_keys_delete(env);
+		if (!ft_strcmp(KEY_SPACE, env->buf))
+		{
+			((t_elem*)env->page.current_element->content)->mode ^= IS_SELECTED;
+			get_next_element(env);
+		}
+		if (!ft_strcmp(KEY_ENTER, env->buf))
+			ft_terminate(env);
 	}
-	if (!ft_strcmp(KEY_ENTER, env->buf))
-		ft_terminate(env);
 }

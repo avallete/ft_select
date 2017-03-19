@@ -17,6 +17,8 @@ void				elem_destructor(void *elem)
 	t_elem *tmp;
 
 	tmp = (t_elem*)elem;
+	if (tmp->origname)
+		free(tmp->origname);
 	if (tmp->name)
 		free(tmp->name);
 	tmp->name = NULL;
