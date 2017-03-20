@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:26:06 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/30 19:15:31 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:16:23 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static void	ft_select(char **argv)
 	ft_new_select(&env, argv);
 	ft_init_sig(&sig_struct, &env);
 	assign_colors(env.args);
-	env.page.relpos = get_current_element_relative_position(&(env.page), env.win);
+	env.page.relpos = get_current_element_relative_position(\
+						&(env.page), env.win);
 	while (!env.quit)
 	{
 		if (env.print)

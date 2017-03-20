@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/03 19:51:49 by avallete          #+#    #+#             */
-/*   Updated: 2017/03/11 20:54:51 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:18:52 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 typedef struct				s_elem
 {
-	char 					*origname;
+	char					*origname;
 	char					*name;
 	char					mode;
 	char					*color;
@@ -106,6 +106,7 @@ void						ft_clean_screen(t_select *env);
 void						ft_init_term(void *data);
 void						ft_new_select(t_select *env, char **argv);
 void						test_terminal_capabilities(t_select *env);
+char						*escape_parameter(const char *src);
 
 /*
 ** Use termcaps

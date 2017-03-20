@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcount.c                                      :+:      :+:    :+:   */
+/*   escape_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avallete <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/20 18:14:45 by avallete          #+#    #+#             */
-/*   Updated: 2017/03/20 18:14:52 by avallete         ###   ########.fr       */
+/*   Created: 2017/03/20 18:17:59 by avallete          #+#    #+#             */
+/*   Updated: 2017/03/20 18:20:59 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_select.h"
 
-size_t	ft_strcount(char const *s, int (*f)(int c))
+char				*escape_parameter(const char *src)
 {
-	int		i;
-	size_t	count;
+	char	*scop;
+	size_t	i;
 
-	count = 0;
 	i = 0;
-	if (s && *s)
+	if ((scop = ft_strdup(src)))
 	{
-		while (s[i])
+		while (scop[i])
 		{
-			if (f(s[i]))
-				++count;
+			if (scop[i] <= 32 || scop[i] > 126)
+				scop[i] = '?';
 			++i;
 		}
+		return (scop);
 	}
-	return (count);
+	return (NULL);
 }

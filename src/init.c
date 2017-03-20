@@ -6,30 +6,11 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/05 23:13:48 by avallete          #+#    #+#             */
-/*   Updated: 2017/03/11 20:53:14 by avallete         ###   ########.fr       */
+/*   Updated: 2017/03/20 18:18:55 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-static char             *escape_parameter(const char *src)
-{
-    char *scop;
-    size_t i;
-
-    i = 0;
-    if ((scop = ft_strdup(src)))
-    {
-        while (scop[i])
-        {
-            if (scop[i] <= 32 || scop[i] > 126)
-                scop[i] = '?';
-            ++i;
-        }
-        return (scop);
-    }
-    return (NULL);
-}
 
 static t_elem			*ft_new_elem(char *ename, char emode, size_t elen)
 {
@@ -37,7 +18,7 @@ static t_elem			*ft_new_elem(char *ename, char emode, size_t elen)
 
 	if ((ret = (t_elem*)malloc(sizeof(t_elem))))
 	{
-        ret->origname = ft_strdup(ename);
+		ret->origname = ft_strdup(ename);
 		ret->name = escape_parameter(ename);
 		ret->mode = emode;
 		ret->len = elen;
@@ -54,8 +35,8 @@ static int				ft_save_arguments(char **argv, t_dlst **dest)
 	i = 0;
 	if (argv && *argv)
 	{
-        while (ft_strcount(*argv, ft_isprint) <= 0)
-            ++argv;
+		while (ft_strcount(*argv, ft_isprint) <= 0)
+			++argv;
 		first_elem = ft_new_elem(*argv, 0, ft_strlen(*argv));
 		first_elem->mode = IS_HOVERED;
 		*dest = ft_dlstnew(first_elem, sizeof(t_elem*));
