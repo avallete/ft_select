@@ -6,7 +6,7 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 18:54:44 by avallete          #+#    #+#             */
-/*   Updated: 2016/08/03 12:57:29 by avallete         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:44:02 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void				ft_signal_watch(t_signal *env)
 
 	i = 1;
 	ft_get_signal_data(env);
-	while (i <= UNIX_SIG_LEN)
+	while (i < UNIX_SIG_LEN)
 	{
 		if (env->sig_handler[i])
 			signal(i, &ft_sighandler);

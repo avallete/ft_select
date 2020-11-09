@@ -6,13 +6,13 @@
 /*   By: avallete <avallete@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 19:34:38 by avallete          #+#    #+#             */
-/*   Updated: 2016/06/24 17:57:01 by avallete         ###   ########.fr       */
+/*   Updated: 2020/11/09 18:42:25 by avallete         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SIGNAL_H
 # define FT_SIGNAL_H
-# define UNIX_SIG_LEN 33
+# define UNIX_SIG_LEN 34
 # include <signal.h>
 
 /*
