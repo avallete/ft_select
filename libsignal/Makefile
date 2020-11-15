@@ -162,10 +162,14 @@ mkfiledir ::=$(abspath $(dir $(mkfilepath)))
 # Use those informations to retrieve relative paths from normed path
 # We use thems to make update rule more robuste, based on relative paths instead
 # Of some absolute path who will change each time the project is installed somewhere
-relsrcdir ::=$(norm_srcdir:$(mkfiledir)/%=./%)
-relincdir ::=$(norm_incdir:$(mkfiledir)/%=./%)
-relsubdirs ::=$(norm_subdirs:$(mkfiledir)/%=./%)
-relsearchignore ::=$(norm_searchignore:$(mkfiledir)/%=./%)
+relsrcdir ::=$(norm_srcdir:$(mkfiledir)%=./%)
+relsrcdir ::=$(relsrcdir:.//%=./%)
+relincdir ::=$(norm_incdir:$(mkfiledir)%=./%)
+relincdir ::=$(relincdir:.//%=./%)
+relsubdirs ::=$(norm_subdirs:$(mkfiledir)%=./%)
+relsubdirs ::=$(relsubdirs:.//%=./%)
+relsearchignore ::=$(norm_searchignore:$(mkfiledir)%=./%)
+relsearchignore ::=$(relsearchignore:.//%=./%)
 # Exclude subdirs from find search since their files must be handle by their own makefile
 find_exclude ::=$(foreach dir, $(relsubdirs) $(relsearchignore), \( -path $(dir) -prune \) -o)
 define update_makefile_sources
